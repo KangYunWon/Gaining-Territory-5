@@ -63,7 +63,7 @@ class MACHINE():
         else:
             return False    
     
-    # (2)
+    # (2) 
 
     def find_even_triangle_strategy(self):
     # 삼각형 탐색
