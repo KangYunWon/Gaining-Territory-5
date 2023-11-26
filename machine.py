@@ -25,7 +25,7 @@ class MACHINE():
         self.triangles = [] # [(a, b), (c, d), (e, f)]
 
     def find_best_selection(self):
-        # (1) 짝수 개의 삼각형 탐색
+        # (1) 짝수개의 삼각형 탐색
         line = self.find_even_triangle_strategy()
         if line:
             return line
