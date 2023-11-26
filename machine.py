@@ -25,6 +25,10 @@ class MACHINE():
         self.triangles = [] # [(a, b), (c, d), (e, f)]
 
     def find_best_selection(self):
+        # (1) 짝수 개의 삼각형 탐색
+        line = self.find_even_triangle_strategy()
+        if line:
+            return line
         available = [[point1, point2] for (point1, point2) in list(combinations(self.whole_points, 2)) if self.check_availability([point1, point2])]
         return random.choice(available)
     
@@ -58,5 +62,60 @@ class MACHINE():
             return True
         else:
             return False    
-
     
+    # (2)
+
+    def find_even_triangle_strategy(self):
+    # 삼각형 탐색
+        for line in self.drawn_lines:
+            connected_lines = self.find_connected_lines(line)
+            for connected_line in connected_lines:
+                # 삼각형 확인
+                possible_triangle = self.form_triangle(line, connected_line)
+                if possible_triangle and self.is_triangle_empty(possible_triangle):
+                    # 삼각형 내부에 다른 점이 없는지 확인
+                    if self.can_form_even_number_of_triangles(possible_triangle):
+                        # 짝수 균형을 유지할 수 있는 선분 찾기
+                        return self.select_line_to_maintain_even_balance(possible_triangle)
+        return None
+
+    def find_connected_lines(self, line):
+        # 주어진 선분과 연결된 다른 선분들을 찾는 함수
+        connected = []
+        for other_line in self.drawn_lines:
+            if line != other_line and (line[0] in other_line or line[1] in other_line):
+                connected.append(other_line)
+        return connected
+
+    def form_triangle(self, line1, line2):
+        # 주어진 두 선분으로 삼각형을 형성할 수 있는지 확인하는 함수
+        points = set(line1 + line2)
+        if len(points) == 3:
+            return list(points)
+        return None
+        
+    def is_triangle_empty(self, triangle):
+        # 주어진 삼각형 내부에 다른 점이 없는지 확인하는 함수
+        triangle_set = set(triangle)
+        for point in self.whole_points:
+            if point not in triangle_set:
+                if self.is_point_inside_triangle(point, triangle):
+                    return False
+        return True
+
+    def is_point_inside_triangle(self, point, triangle):
+        # 삼각형 내부에 점이 있는지 판별하는 로직
+        pass 
+
+    def can_form_even_number_of_triangles(self, triangle):
+        # 주어진 삼각형을 완성하였을 때 짝수 개의 삼각형을 유지할 수 있는지 확인하는 함수
+        pass
+
+    def select_line_to_maintain_even_balance(self, triangle):
+        # 짝수 균형을 유지할 수 있는 선분을 선택하는 함수
+        pass
+
+    def find_available_lines(self):
+        # 사용 가능한 모든 선분을 찾는 함수
+        available = [[point1, point2] for (point1, point2) in list(combinations(self.whole_points, 2)) if self.check_availability([point1, point2])]
+        return available
