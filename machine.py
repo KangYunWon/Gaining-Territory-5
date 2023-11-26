@@ -108,7 +108,7 @@ class MACHINE():
         pass 
 
     def can_form_even_number_of_triangles(self, triangle):
-        # 주어진 삼각형을 완성하였을 때 짝수 개의 삼각형을 유지할 수 있는지 확인하는 함수
+        # 주어진 삼각형을 완성 시 짝수 개의 삼각형을 유지할 수 있는지 확인하는 함수
         pass
 
     def select_line_to_maintain_even_balance(self, triangle):
